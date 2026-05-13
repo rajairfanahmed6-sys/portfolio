@@ -1,0 +1,1112 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8"/>
+<meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+<title>Raja Irfan Ahmed — Senior Creative Designer</title>
+<link rel="preconnect" href="https://fonts.googleapis.com"/>
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin/>
+<link href="https://fonts.googleapis.com/css2?family=Syne:wght@400;600;700;800&family=DM+Sans:ital,wght@0,300;0,400;0,500;1,300&display=swap" rel="stylesheet"/>
+<style>
+/* ══════════════════════════════════════
+   CUSTOM CURSOR
+══════════════════════════════════════ */
+*, *::before, *::after { margin:0; padding:0; box-sizing:border-box; cursor: none !important; }
+
+#cursor-dot {
+  width: 10px; height: 10px; border-radius: 50%;
+  background: #a855f7;
+  position: fixed; top:0; left:0; pointer-events:none; z-index:99999;
+  transform: translate(-50%,-50%);
+  transition: width .15s, height .15s, background .15s, box-shadow .15s;
+  box-shadow: 0 0 14px 4px rgba(168,85,247,0.9), 0 0 30px 8px rgba(168,85,247,0.4);
+}
+#cursor-ring {
+  width: 38px; height: 38px; border-radius: 50%;
+  border: 2px solid rgba(168,85,247,0.6);
+  position: fixed; top:0; left:0; pointer-events:none; z-index:99998;
+  transform: translate(-50%,-50%);
+  transition: width .3s, height .3s, border-color .3s, transform .08s;
+  box-shadow: 0 0 20px rgba(168,85,247,0.3);
+}
+#cursor-dot.hovered {
+  width: 16px; height: 16px;
+  background: #c084fc;
+  box-shadow: 0 0 24px 8px rgba(168,85,247,1), 0 0 50px 16px rgba(168,85,247,0.5);
+}
+#cursor-ring.hovered {
+  width: 56px; height: 56px;
+  border-color: rgba(192,132,252,0.9);
+  box-shadow: 0 0 30px rgba(168,85,247,0.6);
+}
+
+/* ══════════════════════════════════════
+   VARIABLES & BASE
+══════════════════════════════════════ */
+:root {
+  --purple: #a855f7;
+  --purple-bright: #c084fc;
+  --purple-dark: #7e22ce;
+  --purple-glow: rgba(168,85,247,0.3);
+  --purple-glow2: rgba(168,85,247,0.15);
+  --black: #060606;
+  --dark: #0e0e0e;
+  --card: #141414;
+  --card2: #1a1a1a;
+  --white: #f5f5f5;
+  --muted: #777;
+  --border: rgba(168,85,247,0.2);
+}
+
+html { scroll-behavior:smooth; }
+
+body {
+  background: var(--black);
+  color: var(--white);
+  font-family: 'DM Sans', sans-serif;
+  font-size: 16px; line-height: 1.6;
+  overflow-x: hidden;
+}
+
+/* ambient glow that follows mouse */
+#mouse-glow {
+  position: fixed; width: 600px; height: 600px; border-radius: 50%;
+  background: radial-gradient(circle, rgba(168,85,247,0.07) 0%, transparent 70%);
+  pointer-events: none; z-index: 0;
+  transform: translate(-50%,-50%);
+  transition: left .6s ease, top .6s ease;
+}
+
+::-webkit-scrollbar { width:4px; }
+::-webkit-scrollbar-track { background: var(--black); }
+::-webkit-scrollbar-thumb { background: var(--purple); border-radius:4px; box-shadow:0 0 8px var(--purple); }
+
+/* ══════════════════════════════════════
+   GLOBAL HOVER GLOW
+══════════════════════════════════════ */
+a, button,
+.service-card, .process-step, .skill-card,
+.testi-card, .about-card, .feature-item,
+.contact-link, .tag-pill, .stat,
+.nav-links a, .nav-cta, .btn-primary, .btn-outline {
+  position: relative;
+}
+.service-card::after, .process-step::after, .skill-card::after,
+.testi-card::after, .about-card::after, .feature-item::after {
+  content: '';
+  position: absolute; inset: 0; border-radius: inherit;
+  box-shadow: 0 0 0 0 rgba(168,85,247,0);
+  transition: box-shadow .3s;
+  pointer-events: none;
+}
+.service-card:hover::after, .process-step:hover::after,
+.skill-card:hover::after, .testi-card:hover::after,
+.about-card:hover::after, .feature-item:hover::after {
+  box-shadow: 0 0 30px 4px rgba(168,85,247,0.35), inset 0 0 20px rgba(168,85,247,0.06);
+}
+
+/* ══════════════════════════════════════
+   NAVIGATION
+══════════════════════════════════════ */
+nav {
+  position: fixed; top:0; left:0; right:0; z-index:100;
+  display:flex; align-items:center; justify-content:space-between;
+  padding:18px 60px;
+  background: rgba(6,6,6,0.88);
+  backdrop-filter: blur(20px);
+  border-bottom: 1px solid var(--border);
+  box-shadow: 0 2px 40px rgba(168,85,247,0.08);
+}
+.nav-logo {
+  font-family:'Syne',sans-serif; font-weight:800; font-size:19px; letter-spacing:-0.5px;
+  color:var(--white); display:flex; align-items:center; gap:10px;
+}
+.nav-logo span { color:var(--purple); }
+.nav-star {
+  width:28px; height:28px; background:var(--purple); border-radius:50%;
+  display:flex; align-items:center; justify-content:center; font-size:14px;
+  animation:spin 8s linear infinite;
+  box-shadow:0 0 16px var(--purple), 0 0 32px rgba(168,85,247,0.4);
+}
+@keyframes spin { to { transform:rotate(360deg); } }
+
+.nav-links { display:flex; gap:36px; list-style:none; }
+.nav-links a {
+  font-size:14px; font-weight:500; color:var(--muted);
+  text-decoration:none; letter-spacing:0.3px;
+  transition:color .2s, text-shadow .2s;
+}
+.nav-links a:hover { color:var(--purple); text-shadow:0 0 12px rgba(168,85,247,0.7); }
+
+.nav-cta {
+  background:var(--purple); color:#fff;
+  border:none; padding:10px 24px; border-radius:50px;
+  font-family:'DM Sans',sans-serif; font-size:14px; font-weight:600;
+  text-decoration:none; letter-spacing:0.2px;
+  transition:background .2s, transform .15s, box-shadow .2s;
+  box-shadow:0 0 20px rgba(168,85,247,0.5);
+}
+.nav-cta:hover {
+  background:var(--purple-dark); transform:translateY(-1px);
+  box-shadow:0 0 35px rgba(168,85,247,0.8), 0 4px 20px rgba(0,0,0,0.4);
+}
+
+/* ══════════════════════════════════════
+   HERO
+══════════════════════════════════════ */
+.hero {
+  min-height:100vh; display:flex; align-items:center;
+  padding:120px 60px 80px;
+  position:relative; overflow:hidden;
+}
+.hero-bg-blob {
+  position:absolute; top:-200px; right:-200px;
+  width:700px; height:700px; border-radius:50%;
+  background:radial-gradient(circle, rgba(168,85,247,0.22) 0%, transparent 65%);
+  pointer-events:none; animation:blobPulse 6s ease-in-out infinite;
+}
+.hero-bg-blob2 {
+  position:absolute; bottom:-150px; left:-100px;
+  width:500px; height:500px; border-radius:50%;
+  background:radial-gradient(circle, rgba(168,85,247,0.12) 0%, transparent 65%);
+  pointer-events:none; animation:blobPulse 8s ease-in-out infinite reverse;
+}
+@keyframes blobPulse {
+  0%,100% { transform:scale(1); opacity:0.8; }
+  50% { transform:scale(1.08); opacity:1; }
+}
+.hero-grid-lines {
+  position:absolute; inset:0; pointer-events:none;
+  background-image:
+    linear-gradient(rgba(168,85,247,0.05) 1px, transparent 1px),
+    linear-gradient(90deg, rgba(168,85,247,0.05) 1px, transparent 1px);
+  background-size:60px 60px;
+}
+
+.hero-content { position:relative; z-index:2; max-width:640px; }
+
+.hero-badge {
+  display:inline-flex; align-items:center; gap:8px;
+  background:rgba(168,85,247,0.12); border:1px solid var(--border);
+  padding:6px 16px; border-radius:50px; font-size:13px;
+  color:var(--purple-bright); margin-bottom:28px;
+  animation:fadeUp .6s ease both;
+  box-shadow:0 0 20px rgba(168,85,247,0.15);
+}
+.hero-badge::before { content:'●'; font-size:8px; color:var(--purple); animation:pulse 2s infinite; }
+@keyframes pulse { 0%,100%{opacity:1} 50%{opacity:0.3} }
+
+.hero h1 {
+  font-family:'Syne',sans-serif;
+  font-size:clamp(42px,6vw,78px); font-weight:800;
+  line-height:1.05; letter-spacing:-2px; margin-bottom:24px;
+  animation:fadeUp .6s .1s ease both;
+}
+.hero h1 em {
+  font-style:normal; color:var(--purple); position:relative;
+  text-shadow:0 0 40px rgba(168,85,247,0.5);
+}
+.hero h1 em::after {
+  content:''; position:absolute; bottom:4px; left:0; right:0; height:3px;
+  background:var(--purple); opacity:0.5; border-radius:2px;
+  box-shadow:0 0 10px var(--purple);
+}
+
+.hero-desc {
+  font-size:17px; color:#aaa; line-height:1.75;
+  max-width:520px; margin-bottom:40px;
+  animation:fadeUp .6s .2s ease both;
+}
+
+.hero-btns { display:flex; gap:14px; flex-wrap:wrap; animation:fadeUp .6s .3s ease both; }
+
+.btn-primary {
+  background:var(--purple); color:#fff;
+  padding:14px 30px; border-radius:50px;
+  font-family:'DM Sans',sans-serif; font-size:15px; font-weight:500;
+  text-decoration:none; display:inline-flex; align-items:center; gap:8px;
+  transition:background .2s, transform .15s, box-shadow .2s;
+  box-shadow:0 0 30px rgba(168,85,247,0.5), 0 4px 20px rgba(0,0,0,0.3);
+}
+.btn-primary:hover {
+  background:var(--purple-dark); transform:translateY(-3px);
+  box-shadow:0 0 60px rgba(168,85,247,0.8), 0 8px 30px rgba(0,0,0,0.4);
+}
+.btn-outline {
+  background:transparent; color:var(--white);
+  padding:14px 30px; border-radius:50px; border:1px solid rgba(255,255,255,0.2);
+  font-family:'DM Sans',sans-serif; font-size:15px; font-weight:500;
+  text-decoration:none; display:inline-flex; align-items:center; gap:8px;
+  transition:border-color .2s, background .2s, transform .15s, box-shadow .2s;
+}
+.btn-outline:hover {
+  border-color:var(--purple); background:rgba(168,85,247,0.1); transform:translateY(-3px);
+  box-shadow:0 0 30px rgba(168,85,247,0.4);
+}
+
+/* ── Hero right card ── */
+.hero-photo-container {
+  position: absolute;
+  right: 7%;
+  top: 50%;
+  transform: translateY(-50%);
+  z-index: 2;
+  width: 460px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  animation: floatImage 5s ease-in-out infinite;
+}
+
+.hero-photo-container img {
+  width: 100%;
+  height: auto;
+  object-fit: contain;
+  filter:
+    drop-shadow(0 0 40px rgba(168,85,247,0.35))
+    drop-shadow(0 0 90px rgba(168,85,247,0.18));
+}
+
+/* Floating Animation */
+@keyframes floatImage {
+  0%,100% {
+    transform: translateY(-50%) translateX(0px);
+  }
+  50% {
+    transform: translateY(-53%) translateX(-8px);
+  }
+}
+
+/* Mobile */
+@media(max-width:900px){
+  .hero-photo-container{
+    position: relative;
+    right: auto;
+    top: auto;
+    transform: none;
+    width: 85%;
+    margin: 50px auto 0;
+    animation: none;
+  }
+}
+
+@keyframes fadeUp { from{opacity:0;transform:translateY(28px)} to{opacity:1;transform:translateY(0)} }
+
+/* ══════════════════════════════════════
+   STATS
+══════════════════════════════════════ */
+.stats {
+  background:var(--card);
+  border-top:1px solid var(--border); border-bottom:1px solid var(--border);
+  padding:36px 60px;
+  display:flex; justify-content:space-around; align-items:center; gap:20px;
+  box-shadow:0 0 60px rgba(168,85,247,0.06);
+}
+.stat { text-align:center; padding:10px 20px; border-radius:16px; transition:background .2s, box-shadow .2s; }
+.stat:hover { background:rgba(168,85,247,0.07); box-shadow:0 0 30px rgba(168,85,247,0.25); }
+.stat-num {
+  font-family:'Syne',sans-serif; font-size:38px; font-weight:800;
+  color:var(--purple); line-height:1;
+  text-shadow:0 0 25px rgba(168,85,247,0.6);
+}
+.stat-label { font-size:13px; color:var(--muted); margin-top:4px; letter-spacing:0.3px; }
+.stat-divider { width:1px; height:50px; background:var(--border); }
+
+/* ══════════════════════════════════════
+   SECTION COMMONS
+══════════════════════════════════════ */
+.section { padding:100px 60px; }
+
+.section-tag {
+  display:inline-flex; align-items:center; gap:8px;
+  background:rgba(168,85,247,0.12); border:1px solid var(--border);
+  color:var(--purple-bright); font-size:13px; font-weight:500;
+  padding:5px 14px; border-radius:50px; margin-bottom:20px;
+  letter-spacing:0.5px; box-shadow:0 0 15px rgba(168,85,247,0.2);
+}
+
+.section-heading {
+  font-family:'Syne',sans-serif; font-size:clamp(32px,4vw,52px);
+  font-weight:800; letter-spacing:-1.5px; line-height:1.1; margin-bottom:20px;
+}
+.section-heading em { font-style:normal; color:var(--purple); text-shadow:0 0 30px rgba(168,85,247,0.45); }
+
+/* ══════════════════════════════════════
+   ABOUT
+══════════════════════════════════════ */
+.about-grid { display:grid; grid-template-columns:1fr 1fr; gap:60px; align-items:center; }
+.about-text p { color:#aaa; font-size:17px; line-height:1.8; margin-bottom:20px; }
+
+.about-features { display:flex; flex-direction:column; gap:14px; margin-top:30px; }
+.feature-item {
+  display:flex; align-items:center; gap:14px;
+  background:var(--card); border:1px solid var(--border);
+  padding:14px 18px; border-radius:14px;
+  transition:border-color .2s, background .2s, box-shadow .3s, transform .2s;
+}
+.feature-item:hover {
+  border-color:var(--purple); background:rgba(168,85,247,0.07);
+  box-shadow:0 0 25px rgba(168,85,247,0.3); transform:translateX(4px);
+}
+.feature-icon {
+  width:40px; height:40px; border-radius:10px;
+  background:rgba(168,85,247,0.15); display:flex; align-items:center;
+  justify-content:center; font-size:18px; flex-shrink:0;
+  box-shadow:0 0 12px rgba(168,85,247,0.3);
+}
+.feature-item p { font-size:14px; color:#ccc; line-height:1.4; }
+.feature-item strong { color:var(--white); font-weight:500; }
+
+.about-visual { display:grid; grid-template-columns:1fr 1fr; gap:16px; }
+.about-card {
+  background:var(--card); border:1px solid var(--border);
+  border-radius:20px; padding:28px 22px;
+  transition:transform .2s, border-color .2s, box-shadow .3s;
+}
+.about-card:hover {
+  transform:translateY(-4px); border-color:var(--purple);
+  box-shadow:0 0 40px rgba(168,85,247,0.3), 0 12px 40px rgba(0,0,0,0.4);
+}
+.about-card:first-child {
+  grid-column:span 2;
+  background:linear-gradient(135deg,rgba(168,85,247,0.13),rgba(126,34,206,0.06));
+}
+.about-card .big { font-family:'Syne',sans-serif; font-size:34px; font-weight:800; color:var(--purple); text-shadow:0 0 20px rgba(168,85,247,0.5); }
+.about-card .label { font-size:13px; color:var(--muted); margin-top:4px; }
+.about-card p { font-size:14px; color:#bbb; margin-top:8px; }
+
+/* ══════════════════════════════════════
+   SERVICES
+══════════════════════════════════════ */
+.services { padding:100px 60px; background:var(--dark); }
+.services-header { display:flex; justify-content:space-between; align-items:flex-end; margin-bottom:50px; flex-wrap:wrap; gap:20px; }
+.services-desc { max-width:420px; color:#aaa; font-size:16px; line-height:1.7; }
+
+.services-grid { display:grid; grid-template-columns:1fr 1fr; gap:16px; }
+.service-card {
+  background:var(--card); border:1px solid var(--border);
+  border-radius:20px; padding:30px;
+  display:flex; align-items:flex-start; gap:18px;
+  transition:border-color .25s, background .25s, transform .2s, box-shadow .3s;
+  text-decoration:none;
+}
+.service-card:hover {
+  border-color:var(--purple); background:rgba(168,85,247,0.07);
+  transform:translateX(5px);
+  box-shadow:0 0 40px rgba(168,85,247,0.3), -4px 0 0 var(--purple);
+}
+.service-num {
+  font-family:'Syne',sans-serif; font-size:13px; font-weight:700;
+  color:var(--purple); background:rgba(168,85,247,0.12);
+  width:36px; height:36px; border-radius:10px;
+  display:flex; align-items:center; justify-content:center; flex-shrink:0;
+  box-shadow:0 0 12px rgba(168,85,247,0.3);
+}
+.service-info h3 { font-family:'Syne',sans-serif; font-size:17px; font-weight:700; margin-bottom:6px; color:var(--white); }
+.service-info p { font-size:14px; color:var(--muted); line-height:1.6; }
+.service-arrow { margin-left:auto; color:var(--purple); font-size:20px; flex-shrink:0; opacity:0; transition:opacity .2s, transform .2s; }
+.service-card:hover .service-arrow { opacity:1; transform:translateX(4px); }
+
+.services-cta-card {
+  background:linear-gradient(135deg,rgba(168,85,247,0.2),rgba(126,34,206,0.1));
+  border:1px solid rgba(168,85,247,0.4);
+  border-radius:20px; padding:36px; grid-column:span 2;
+  display:flex; align-items:center; justify-content:space-between; flex-wrap:wrap; gap:20px;
+  box-shadow:0 0 60px rgba(168,85,247,0.15);
+  transition:box-shadow .3s;
+}
+.services-cta-card:hover { box-shadow:0 0 80px rgba(168,85,247,0.3); }
+.services-cta-card h3 { font-family:'Syne',sans-serif; font-size:22px; font-weight:700; margin-bottom:6px; }
+.services-cta-card p { color:#aaa; font-size:15px; }
+
+/* ══════════════════════════════════════
+   MARQUEE
+══════════════════════════════════════ */
+.marquee-section {
+  padding:50px 0; overflow:hidden;
+  border-top:1px solid var(--border); border-bottom:1px solid var(--border);
+  background:var(--dark);
+  box-shadow:inset 0 0 60px rgba(168,85,247,0.05);
+}
+.marquee-track { display:flex; gap:40px; width:max-content; animation:marquee 25s linear infinite; }
+.marquee-item {
+  font-family:'Syne',sans-serif;
+  font-size:clamp(26px,4vw,48px); font-weight:800; letter-spacing:-1px;
+  white-space:nowrap; color:var(--white);
+  display:flex; align-items:center; gap:24px;
+}
+.marquee-item .dot { color:var(--purple); font-size:0.5em; text-shadow:0 0 14px var(--purple); }
+.marquee-item.dim { color:rgba(255,255,255,0.15); }
+@keyframes marquee { from{transform:translateX(0)} to{transform:translateX(-50%)} }
+
+/* ══════════════════════════════════════
+   PROCESS
+══════════════════════════════════════ */
+.process { padding:100px 60px; }
+.process-steps { display:grid; grid-template-columns:repeat(4,1fr); gap:20px; margin-top:50px; }
+.process-step {
+  background:var(--card); border:1px solid var(--border);
+  border-radius:20px; padding:30px 24px;
+  position:relative; overflow:hidden;
+  transition:transform .2s, border-color .2s, box-shadow .3s;
+}
+.process-step:hover {
+  transform:translateY(-8px); border-color:var(--purple);
+  box-shadow:0 0 50px rgba(168,85,247,0.35), 0 20px 40px rgba(0,0,0,0.4);
+}
+.process-step::before {
+  content:''; position:absolute; top:0; left:0; right:0; height:3px;
+  background:var(--purple); opacity:0; transition:opacity .2s;
+  box-shadow:0 0 15px var(--purple);
+}
+.process-step:hover::before { opacity:1; }
+/* Numbers in purple */
+.step-num {
+  font-family:'Syne',sans-serif; font-size:48px; font-weight:800;
+  color:var(--purple); line-height:1; margin-bottom:16px;
+  text-shadow:0 0 30px rgba(168,85,247,0.5);
+  opacity:0.9;
+}
+.process-step h3 { font-family:'Syne',sans-serif; font-size:18px; font-weight:700; margin-bottom:10px; }
+.process-step p { font-size:14px; color:var(--muted); line-height:1.7; }
+
+/* ══════════════════════════════════════
+   SKILLS
+══════════════════════════════════════ */
+.team { padding:100px 60px; background:var(--dark); }
+.skills-grid { display:grid; grid-template-columns:repeat(3,1fr); gap:16px; margin-top:50px; }
+.skill-card {
+  background:var(--card); border:1px solid var(--border);
+  border-radius:20px; padding:28px;
+  transition:transform .2s, border-color .2s, box-shadow .3s;
+}
+.skill-card:hover {
+  transform:translateY(-6px); border-color:var(--purple);
+  box-shadow:0 0 50px rgba(168,85,247,0.35), 0 20px 40px rgba(0,0,0,0.4);
+}
+.skill-card-icon { font-size:32px; margin-bottom:14px; }
+.skill-card h3 { font-family:'Syne',sans-serif; font-size:17px; font-weight:700; margin-bottom:8px; }
+.skill-card p { font-size:14px; color:var(--muted); line-height:1.6; }
+.skill-bar { height:4px; background:rgba(168,85,247,0.15); border-radius:2px; margin-top:16px; }
+.skill-bar-fill { height:100%; background:var(--purple); border-radius:2px; box-shadow:0 0 8px var(--purple); }
+
+/* ══════════════════════════════════════
+   TESTIMONIALS
+══════════════════════════════════════ */
+.testimonials { padding:100px 60px; }
+.testi-grid { display:grid; grid-template-columns:1fr 1fr; gap:20px; margin-top:50px; }
+.testi-card {
+  background:var(--card); border:1px solid var(--border);
+  border-radius:20px; padding:32px;
+  transition:border-color .2s, box-shadow .3s, transform .2s;
+}
+.testi-card:hover {
+  border-color:rgba(168,85,247,0.5);
+  box-shadow:0 0 50px rgba(168,85,247,0.3), 0 20px 40px rgba(0,0,0,0.4);
+  transform:translateY(-4px);
+}
+.testi-card .quote { font-size:40px; color:var(--purple); line-height:1; margin-bottom:16px; text-shadow:0 0 20px rgba(168,85,247,0.6); }
+.testi-card p { font-size:15px; color:#ccc; line-height:1.75; font-style:italic; margin-bottom:24px; }
+.testi-author { display:flex; align-items:center; gap:12px; }
+.testi-avatar {
+  width:44px; height:44px; border-radius:50%;
+  background:linear-gradient(135deg,var(--purple),var(--purple-dark));
+  display:flex; align-items:center; justify-content:center;
+  font-weight:700; font-size:16px; flex-shrink:0;
+  box-shadow:0 0 16px rgba(168,85,247,0.5);
+}
+.testi-name { font-weight:500; font-size:15px; }
+.testi-role { font-size:13px; color:var(--muted); }
+.testi-stars { color:var(--purple); font-size:14px; letter-spacing:1px; margin-top:2px; text-shadow:0 0 8px rgba(168,85,247,0.6); }
+
+/* ══════════════════════════════════════
+   TAGS MARQUEE
+══════════════════════════════════════ */
+.tags-section { padding:30px 0; overflow:hidden; background:var(--dark); }
+.tags-track { display:flex; gap:12px; width:max-content; animation:marquee 20s linear infinite reverse; }
+.tag-pill {
+  background:var(--card); border:1px solid var(--border);
+  padding:8px 18px; border-radius:50px;
+  font-size:13px; color:#bbb; white-space:nowrap;
+  display:flex; align-items:center; gap:8px;
+  transition:border-color .2s, color .2s, box-shadow .2s;
+}
+.tag-pill:hover { border-color:var(--purple); color:var(--purple); box-shadow:0 0 20px rgba(168,85,247,0.35); }
+.tag-pill span { color:var(--purple); text-shadow:0 0 8px var(--purple); }
+
+/* ══════════════════════════════════════
+   CONTACT
+══════════════════════════════════════ */
+.contact { padding:100px 60px; position:relative; overflow:hidden; }
+.contact-bg {
+  position:absolute; inset:0;
+  background:radial-gradient(ellipse at 50% 100%, rgba(168,85,247,0.14) 0%, transparent 70%);
+  pointer-events:none;
+}
+.contact-inner { position:relative; z-index:2; max-width:620px; margin:0 auto; text-align:center; }
+.contact-inner .section-tag { margin:0 auto 20px; }
+.contact-inner .section-heading { margin-bottom:16px; }
+.contact-inner > p { color:#aaa; font-size:17px; margin-bottom:40px; }
+
+.contact-form { text-align:left; }
+.form-group { margin-bottom:16px; }
+.form-group input, .form-group textarea {
+  width:100%;
+  background:var(--card); border:1px solid var(--border);
+  color:var(--white); font-family:'DM Sans',sans-serif; font-size:15px;
+  padding:14px 20px; border-radius:14px; outline:none;
+  transition:border-color .2s, box-shadow .2s;
+}
+.form-group input::placeholder, .form-group textarea::placeholder { color:var(--muted); }
+.form-group input:focus, .form-group textarea:focus {
+  border-color:var(--purple);
+  box-shadow:0 0 25px rgba(168,85,247,0.3);
+}
+.form-group textarea { height:130px; resize:vertical; }
+.form-submit {
+  width:100%; background:var(--purple); color:#fff;
+  padding:15px; border:none; border-radius:50px;
+  font-family:'DM Sans',sans-serif; font-size:16px; font-weight:500;
+  transition:background .2s, transform .15s, box-shadow .2s;
+  box-shadow:0 0 40px rgba(168,85,247,0.5);
+}
+.form-submit:hover {
+  background:var(--purple-dark); transform:translateY(-2px);
+  box-shadow:0 0 70px rgba(168,85,247,0.8);
+}
+
+.contact-links { display:flex; justify-content:center; gap:16px; margin-top:30px; flex-wrap:wrap; }
+.contact-link {
+  display:flex; align-items:center; gap:8px;
+  background:var(--card); border:1px solid var(--border);
+  padding:10px 20px; border-radius:50px;
+  font-size:14px; color:#bbb; text-decoration:none;
+  transition:border-color .2s, color .2s, box-shadow .2s, transform .15s;
+}
+.contact-link:hover {
+  border-color:var(--purple); color:var(--purple);
+  box-shadow:0 0 25px rgba(168,85,247,0.4); transform:translateY(-2px);
+}
+.contact-link svg { width:16px; height:16px; }
+
+/* ══════════════════════════════════════
+   FOOTER
+══════════════════════════════════════ */
+footer {
+  background:var(--purple); padding:50px 60px;
+  box-shadow:0 -10px 60px rgba(168,85,247,0.4);
+}
+.footer-grid { display:grid; grid-template-columns:2fr 1fr 1fr 1.5fr; gap:40px; }
+.footer-logo {
+  font-family:'Syne',sans-serif; font-size:22px; font-weight:800;
+  color:#fff; margin-bottom:14px; display:flex; align-items:center; gap:8px;
+}
+.footer-logo .star2 {
+  width:26px; height:26px; background:rgba(255,255,255,0.2); border-radius:50%;
+  display:flex; align-items:center; justify-content:center; font-size:13px;
+}
+.footer-brand p { font-size:14px; color:rgba(255,255,255,0.75); line-height:1.7; max-width:260px; }
+.footer-col h4 { font-family:'Syne',sans-serif; font-size:15px; font-weight:700; color:#fff; margin-bottom:16px; }
+.footer-col ul { list-style:none; }
+.footer-col ul li { margin-bottom:10px; }
+.footer-col ul li a {
+  font-size:14px; color:rgba(255,255,255,0.65); text-decoration:none;
+  transition:color .2s, text-shadow .2s;
+}
+.footer-col ul li a:hover { color:#fff; text-shadow:0 0 10px rgba(255,255,255,0.5); }
+.footer-newsletter input {
+  width:100%; background:rgba(255,255,255,0.15); border:1px solid rgba(255,255,255,0.3);
+  color:#fff; padding:11px 16px; border-radius:10px; font-size:14px;
+  outline:none; font-family:'DM Sans',sans-serif; margin-bottom:10px;
+  transition:border-color .2s, box-shadow .2s;
+}
+.footer-newsletter input::placeholder { color:rgba(255,255,255,0.5); }
+.footer-newsletter input:focus { border-color:rgba(255,255,255,0.7); box-shadow:0 0 15px rgba(255,255,255,0.2); }
+.footer-newsletter button {
+  width:100%; background:#fff; color:var(--purple);
+  border:none; padding:11px; border-radius:10px;
+  font-family:'DM Sans',sans-serif; font-weight:600; font-size:14px;
+  transition:opacity .2s, box-shadow .2s;
+}
+.footer-newsletter button:hover { opacity:0.92; box-shadow:0 0 20px rgba(255,255,255,0.3); }
+.footer-bottom {
+  margin-top:40px; padding-top:24px;
+  border-top:1px solid rgba(255,255,255,0.2);
+  display:flex; justify-content:space-between; align-items:center;
+  font-size:13px; color:rgba(255,255,255,0.6); flex-wrap:wrap; gap:12px;
+}
+
+/* ══════════════════════════════════════
+   RESPONSIVE
+══════════════════════════════════════ */
+@media(max-width:900px){
+  nav { padding:16px 24px; }
+  .nav-links { display:none; }
+  .hero { padding:100px 24px 80px; flex-direction:column; }
+  .hero-photo-container { position:static; transform:none; margin-top:40px; }
+  .hero-content { max-width:100%; }
+  .stats { padding:30px 24px; flex-wrap:wrap; }
+  .stat-divider { display:none; }
+  .section,.services,.process,.team,.testimonials,.contact { padding:60px 24px; }
+  .about-grid,.testi-grid { grid-template-columns:1fr; }
+  .services-grid { grid-template-columns:1fr; }
+  .services-cta-card { grid-column:span 1; }
+  .process-steps { grid-template-columns:1fr 1fr; }
+  .skills-grid { grid-template-columns:1fr 1fr; }
+  .footer-grid { grid-template-columns:1fr 1fr; }
+  footer { padding:40px 24px; }
+}
+</style>
+</head>
+<body>
+
+<!-- ── CUSTOM CURSOR ── -->
+<div id="cursor-dot"></div>
+<div id="cursor-ring"></div>
+<div id="mouse-glow"></div>
+
+<!-- ══════════════════ NAV ══════════════════ -->
+<nav>
+  <div class="nav-logo">
+    <div class="nav-star">✦</div>
+    Raja Irfan<span>.</span>
+  </div>
+  <ul class="nav-links">
+    <li><a href="#about">About</a></li>
+    <li><a href="#services">Services</a></li>
+    <li><a href="#process">Process</a></li>
+    <li><a href="#skills">Skills</a></li>
+    <li><a href="#reviews">Reviews</a></li>
+  </ul>
+  <a href="#getintouch" class="nav-cta">Hire Me →</a>
+</nav>
+
+<!-- ══════════════════ HERO ══════════════════ -->
+<section class="hero" id="home">
+  <div class="hero-bg-blob"></div>
+  <div class="hero-bg-blob2"></div>
+  <div class="hero-grid-lines"></div>
+
+  <div class="hero-content">
+    <div class="hero-badge">Available for Projects — Jhelum, Pakistan</div>
+    <h1>Helping <em>Brands</em><br>Through Creative<br>Solutions</h1>
+    <p class="hero-desc">From Amazon listing images to full brand storytelling — I deliver conversion-focused visuals that elevate your brand and drive real sales growth.</p>
+    <div class="hero-btns">
+      <a href="#getintouch" class="btn-primary">Start Your Project ↗</a>
+      <a href="#services" class="btn-outline">Let's Collaborate →</a>
+    </div>
+  </div>
+
+  <div class="hero-photo-container">
+    <img src="my-photo.png" alt="Raja Irfan Ahmed"/>
+  </div>
+</section>
+
+<!-- ══════════════════ STATS ══════════════════ -->
+<div class="stats">
+  <div class="stat">
+    <div class="stat-num" data-target="200">200+</div>
+    <div class="stat-label">Projects Delivered</div>
+  </div>
+  <div class="stat-divider"></div>
+  <div class="stat">
+    <div class="stat-num" data-target="5">5+</div>
+    <div class="stat-label">Years Exp.</div>
+  </div>
+  <div class="stat-divider"></div>
+  <div class="stat">
+    <div class="stat-num" data-target="300">300+</div>
+    <div class="stat-label">Brands Scaled</div>
+  </div>
+</div>
+
+<!-- ══════════════════ ABOUT ══════════════════ -->
+<section class="section" id="about">
+  <div class="about-grid">
+    <div class="about-text">
+      <div class="section-tag">✦ Who I Am</div>
+      <h2 class="section-heading">A <em>Creative Force</em><br>Behind Brands</h2>
+      <p>I'm a Senior Creative Designer and Amazon/E-commerce Specialist with 5+ years of hands-on design experience. Currently leading the creative team at <strong style="color:#fff">Urtaskers</strong>, a USA-based e-commerce service agency.</p>
+      <p>I don't just design — I engineer visuals that convert browsers into buyers. My work lives at the intersection of creativity and commerce, crafted to win on the world's most competitive digital shelves.</p>
+
+      <div class="about-features">
+        <div class="feature-item">
+          <div class="feature-icon">🎯</div>
+          <p><strong>Conversion-First</strong> — Every pixel is crafted to drive clicks and close sales.</p>
+        </div>
+        <div class="feature-item">
+          <div class="feature-icon">📋</div>
+          <p><strong>Amazon Compliance</strong> — Expert knowledge of strict image and A+ content guidelines.</p>
+        </div>
+        <div class="feature-item">
+          <div class="feature-icon">🤝</div>
+          <p><strong>Collaborative Approach</strong> — Discovery → Design → Review → Delivery.</p>
+        </div>
+      </div>
+    </div>
+    <div class="about-visual">
+      <div class="about-card">
+        <div class="big">5+ Years</div>
+        <div class="label">in the Design Industry</div>
+        <p>Started in 2021, building expertise in Amazon and e-commerce visuals that consistently outperform competitors.</p>
+      </div>
+      <div class="about-card">
+        <div class="big">🏆</div>
+        <p>Creative Team Manager at Urtaskers, USA-based agency</p>
+      </div>
+      <div class="about-card">
+        <div class="big">📍</div>
+        <p>Based in Jhelum, Punjab, Pakistan — working globally</p>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- ══════════════════ SERVICES ══════════════════ -->
+<section class="services" id="services">
+  <div class="services-header">
+    <div>
+      <div class="section-tag">✦ What I Do</div>
+      <h2 class="section-heading">Our <em>Services</em></h2>
+    </div>
+    <p class="services-desc">Creative and digital services designed to help your brand dominate on Amazon and beyond.</p>
+  </div>
+  <div class="services-grid">
+    <div class="service-card">
+      <div class="service-num">01</div>
+      <div class="service-info">
+        <h3>Amazon Listing Images</h3>
+        <p>High-converting hero images, infographics, and lifestyle slides that make your product impossible to scroll past.</p>
+      </div>
+      <div class="service-arrow">→</div>
+    </div>
+    <div class="service-card">
+      <div class="service-num">02</div>
+      <div class="service-info">
+        <h3>A+ Content Design</h3>
+        <p>Professional A+ and Premium A+ layouts including hotspot modules and comparison charts that build trust.</p>
+      </div>
+      <div class="service-arrow">→</div>
+    </div>
+    <div class="service-card">
+      <div class="service-num">03</div>
+      <div class="service-info">
+        <h3>Brand Storefronts</h3>
+        <p>Multi-page Amazon brand stores and storefront designs that tell your brand's story compellingly.</p>
+      </div>
+      <div class="service-arrow">→</div>
+    </div>
+    <div class="service-card">
+      <div class="service-num">04</div>
+      <div class="service-info">
+        <h3>Brand Storytelling</h3>
+        <p>Compelling "Brand Story" sections that build deep buyer trust and differentiate you from competitors.</p>
+      </div>
+      <div class="service-arrow">→</div>
+    </div>
+    <div class="service-card">
+      <div class="service-num">05</div>
+      <div class="service-info">
+        <h3>Digital Marketing Assets</h3>
+        <p>Social media posts, web banners, and promotional graphics engineered for engagement and conversion.</p>
+      </div>
+      <div class="service-arrow">→</div>
+    </div>
+    <div class="service-card">
+      <div class="service-num">06</div>
+      <div class="service-info">
+        <h3>Product Mockups & Branding</h3>
+        <p>Expert Photoshop product branding and AI-assisted realistic mockups that showcase your product at its best.</p>
+      </div>
+      <div class="service-arrow">→</div>
+    </div>
+    <div class="services-cta-card">
+      <div>
+        <h3>Looking for design experts who can bring your vision to life?</h3>
+        <p>Let's discuss your project and craft something exceptional together.</p>
+      </div>
+      <div style="display:flex;gap:12px;flex-wrap:wrap;">
+        <a href="#getintouch" class="btn-primary">Meet Your Expert ↗</a>
+        <a href="https://behance.net/Raja_IrfanAhmed" target="_blank" class="btn-outline">See How We Work →</a>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- ══════════════════ MARQUEE ══════════════════ -->
+<div class="marquee-section">
+  <div class="marquee-track">
+    <div class="marquee-item">Innovate <span class="dot">✦</span></div>
+    <div class="marquee-item dim">Inspire <span class="dot">✦</span></div>
+    <div class="marquee-item">Create <span class="dot">✦</span></div>
+    <div class="marquee-item dim">Convert <span class="dot">✦</span></div>
+    <div class="marquee-item">Innovate <span class="dot">✦</span></div>
+    <div class="marquee-item dim">Inspire <span class="dot">✦</span></div>
+    <div class="marquee-item">Create <span class="dot">✦</span></div>
+    <div class="marquee-item dim">Convert <span class="dot">✦</span></div>
+    <div class="marquee-item">Innovate <span class="dot">✦</span></div>
+    <div class="marquee-item dim">Inspire <span class="dot">✦</span></div>
+    <div class="marquee-item">Create <span class="dot">✦</span></div>
+    <div class="marquee-item dim">Convert <span class="dot">✦</span></div>
+  </div>
+</div>
+
+<!-- ══════════════════ PROCESS ══════════════════ -->
+<section class="process" id="process">
+  <div style="text-align:center;max-width:560px;margin:0 auto;">
+    <div class="section-tag" style="display:inline-flex;">✦ How I Work</div>
+    <h2 class="section-heading">My Design <em>Process</em></h2>
+    <p style="color:#aaa;font-size:16px;">A clear, collaborative four-step workflow that ensures every project is delivered to perfection.</p>
+  </div>
+  <div class="process-steps">
+    <div class="process-step">
+      <div class="step-num">01</div>
+      <h3>Discovery</h3>
+      <p>Deep dive into your brand, product, target audience, and competitive landscape to define the creative direction.</p>
+    </div>
+    <div class="process-step">
+      <div class="step-num">02</div>
+      <h3>Design &amp; Drafting</h3>
+      <p>Crafting initial concepts and visual prototypes using Photoshop and AI-assisted tools, aligned with your goals.</p>
+    </div>
+    <div class="process-step">
+      <div class="step-num">03</div>
+      <h3>Review &amp; Revision</h3>
+      <p>Collaborative feedback loop to refine every detail until the design perfectly matches your vision and needs.</p>
+    </div>
+    <div class="process-step">
+      <div class="step-num">04</div>
+      <h3>Final Delivery</h3>
+      <p>Delivering polished, Amazon-compliant final assets in all required formats, ready to upload and launch.</p>
+    </div>
+  </div>
+</section>
+
+<!-- ══════════════════ SKILLS ══════════════════ -->
+<section class="team" id="skills">
+  <div class="section-tag">✦ Expertise</div>
+  <h2 class="section-heading">Software &amp; <em>Skills</em></h2>
+  <div class="skills-grid">
+    <div class="skill-card">
+      <div class="skill-card-icon">🎨</div>
+      <h3>Adobe Photoshop</h3>
+      <p>Expert-level product branding, compositing, retouching, and Amazon-ready image production.</p>
+      <div class="skill-bar"><div class="skill-bar-fill" style="width:97%"></div></div>
+    </div>
+    <div class="skill-card">
+      <div class="skill-card-icon">🤖</div>
+      <h3>AI Design Tools</h3>
+      <p>Leveraging AI to create realistic product mockups and cutting-edge visual concepts at scale.</p>
+      <div class="skill-bar"><div class="skill-bar-fill" style="width:90%"></div></div>
+    </div>
+    <div class="skill-card">
+      <div class="skill-card-icon">📦</div>
+      <h3>Amazon A+ Content</h3>
+      <p>Deep mastery of A+ and Premium A+ modules, hotspots, comparison charts, and compliance rules.</p>
+      <div class="skill-bar"><div class="skill-bar-fill" style="width:95%"></div></div>
+    </div>
+    <div class="skill-card">
+      <div class="skill-card-icon">🏪</div>
+      <h3>Brand Storefront Design</h3>
+      <p>Multi-page Amazon brand stores crafted for maximum brand impact and shopper engagement.</p>
+      <div class="skill-bar"><div class="skill-bar-fill" style="width:92%"></div></div>
+    </div>
+    <div class="skill-card">
+      <div class="skill-card-icon">📱</div>
+      <h3>Digital Marketing Design</h3>
+      <p>Social media graphics, web banners, and promotional visuals built for real-world performance.</p>
+      <div class="skill-bar"><div class="skill-bar-fill" style="width:88%"></div></div>
+    </div>
+    <div class="skill-card">
+      <div class="skill-card-icon">👥</div>
+      <h3>Creative Team Management</h3>
+      <p>Leading and mentoring creative teams to deliver consistent, high-quality output at agency scale.</p>
+      <div class="skill-bar"><div class="skill-bar-fill" style="width:85%"></div></div>
+    </div>
+  </div>
+</section>
+
+<!-- ══════════════════ TESTIMONIALS ══════════════════ -->
+<section class="testimonials" id="reviews">
+  <div style="text-align:center;max-width:560px;margin:0 auto 50px;">
+    <div class="section-tag" style="display:inline-flex;">✦ Client Reviews</div>
+    <h2 class="section-heading">What Clients <em>Say</em></h2>
+  </div>
+  <div class="testi-grid">
+    <div class="testi-card">
+      <div class="quote">"</div>
+      <p>Working with Raja has been an exceptional experience. He delivered stunning visuals that dramatically improved our Amazon conversion rate. Truly understands what sells.</p>
+      <div class="testi-author">
+        <div class="testi-avatar">AJ</div>
+        <div>
+          <div class="testi-name">Alex Johnson</div>
+          <div class="testi-role">Amazon Brand Owner, USA</div>
+          <div class="testi-stars">★★★★★</div>
+        </div>
+      </div>
+    </div>
+    <div class="testi-card">
+      <div class="quote">"</div>
+      <p>The A+ content Raja designed for us completely transformed our brand page. Professional, fast, and always on-brand. Will absolutely work with him again on our next launch.</p>
+      <div class="testi-author">
+        <div class="testi-avatar">SM</div>
+        <div>
+          <div class="testi-name">Sarah Mitchell</div>
+          <div class="testi-role">E-commerce Manager, UK</div>
+          <div class="testi-stars">★★★★★</div>
+        </div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- ══════════════════ TAGS MARQUEE ══════════════════ -->
+<div class="tags-section">
+  <div class="tags-track">
+    <div class="tag-pill"><span>✦</span> UX Design</div>
+    <div class="tag-pill"><span>✦</span> App Design</div>
+    <div class="tag-pill"><span>✦</span> Amazon A+</div>
+    <div class="tag-pill"><span>✦</span> Infographics</div>
+    <div class="tag-pill"><span>✦</span> Storefront</div>
+    <div class="tag-pill"><span>✦</span> Hero Images</div>
+    <div class="tag-pill"><span>✦</span> Lifestyle Shoots</div>
+    <div class="tag-pill"><span>✦</span> Brand Story</div>
+    <div class="tag-pill"><span>✦</span> Mockups</div>
+    <div class="tag-pill"><span>✦</span> Photoshop</div>
+    <div class="tag-pill"><span>✦</span> UX Design</div>
+    <div class="tag-pill"><span>✦</span> App Design</div>
+    <div class="tag-pill"><span>✦</span> Amazon A+</div>
+    <div class="tag-pill"><span>✦</span> Infographics</div>
+    <div class="tag-pill"><span>✦</span> Storefront</div>
+    <div class="tag-pill"><span>✦</span> Hero Images</div>
+    <div class="tag-pill"><span>✦</span> Lifestyle Shoots</div>
+    <div class="tag-pill"><span>✦</span> Brand Story</div>
+    <div class="tag-pill"><span>✦</span> Mockups</div>
+    <div class="tag-pill"><span>✦</span> Photoshop</div>
+  </div>
+</div>
+
+<!-- ══════════════════ CONTACT ══════════════════ -->
+<section class="contact" id="getintouch">
+  <div class="contact-bg"></div>
+  <div class="contact-inner">
+    <div class="section-tag">✦ Get in Touch</div>
+    <h2 class="section-heading">Get in Touch <em>Today!</em></h2>
+    <p>Let's transform your brand with visuals that don't just look great — they sell. Whether you need a complete Amazon rebrand or a stunning listing refresh, I'm here.</p>
+    <div class="contact-form">
+      <div class="form-group"><input type="text" placeholder="Your Name"/></div>
+      <div class="form-group"><input type="email" placeholder="Enter your email"/></div>
+      <div class="form-group"><textarea placeholder="Tell me about your project..."></textarea></div>
+      <button class="form-submit">Send Message →</button>
+    </div>
+    <div class="contact-links">
+      <a href="mailto:rajairfanahmed6@gmail.com" class="contact-link">
+        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><rect x="2" y="4" width="20" height="16" rx="2"/><path d="m2 7 10 7 10-7"/></svg>
+        Email Me
+      </a>
+      <a href="https://linkedin.com/in/raja-irfan-ahmed" target="_blank" class="contact-link">
+        <svg viewBox="0 0 24 24" fill="currentColor"><path d="M16 8a6 6 0 0 1 6 6v7h-4v-7a2 2 0 0 0-2-2 2 2 0 0 0-2 2v7h-4v-7a6 6 0 0 1 6-6z"/><rect x="2" y="9" width="4" height="12"/><circle cx="4" cy="4" r="2"/></svg>
+        LinkedIn
+      </a>
+      <a href="https://behance.net/Raja_IrfanAhmed" target="_blank" class="contact-link">
+        <svg viewBox="0 0 24 24" fill="currentColor"><path d="M7.5 13.5H9c.828 0 1.5-.784 1.5-1.5S9.828 10.5 9 10.5H7.5v3zm0 3H9.375C10.411 16.5 11.25 15.67 11.25 14.625S10.411 12.75 9.375 12.75H7.5v3.75zM4.5 7.5v9h5.25c1.657 0 3-1.343 3-3 0-.88-.38-1.67-.984-2.22.38-.49.609-1.1.609-1.78 0-1.657-1.343-3-3-3H4.5zm11.25 3h4.5c0-.83-.67-1.5-1.5-1.5h-1.5c-.83 0-1.5.67-1.5 1.5zm-.094 3.094C15.906 14.36 16.5 15 17.25 15h1.5c.617 0 1.154-.37 1.404-.906H15.656zM14.25 13.5h6c0-2.485-2.015-4.5-3-4.5-1.657 0-3 2.015-3 4.5z"/></svg>
+        Behance
+      </a>
+      <a href="https://instagram.com/raja_irfanahmed/" target="_blank" class="contact-link">
+        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><rect x="2" y="2" width="20" height="20" rx="5"/><circle cx="12" cy="12" r="4"/><circle cx="17.5" cy="6.5" r="1" fill="currentColor" stroke="none"/></svg>
+        Instagram
+      </a>
+    </div>
+  </div>
+</section>
+
+<!-- ══════════════════ FOOTER ══════════════════ -->
+<footer>
+  <div class="footer-grid">
+    <div class="footer-brand">
+      <div class="footer-logo"><div class="star2">✦</div> Raja Irfan</div>
+      <p>Senior Creative Designer &amp; Amazon Specialist. Crafting conversion-focused visuals that elevate brands and drive growth.</p>
+    </div>
+    <div class="footer-col">
+      <h4>Company</h4>
+      <ul>
+        <li><a href="#about">About Me</a></li>
+        <li><a href="#services">Services</a></li>
+        <li><a href="#process">Process</a></li>
+        <li><a href="#skills">Skills</a></li>
+      </ul>
+    </div>
+    <div class="footer-col">
+      <h4>Resources</h4>
+      <ul>
+        <li><a href="https://behance.net/Raja_IrfanAhmed" target="_blank">Portfolio</a></li>
+        <li><a href="https://linkedin.com/in/raja-irfan-ahmed" target="_blank">LinkedIn</a></li>
+        <li><a href="https://instagram.com/raja_irfanahmed/" target="_blank">Instagram</a></li>
+        <li><a href="mailto:rajairfanahmed6@gmail.com">Email</a></li>
+      </ul>
+    </div>
+    <div class="footer-col">
+      <h4>Subscribe to Newsletter</h4>
+      <div class="footer-newsletter">
+        <input type="email" placeholder="Enter your email"/>
+        <button>Subscribe →</button>
+      </div>
+    </div>
+  </div>
+  <div class="footer-bottom">
+    <span>© 2025 Raja Irfan Ahmed. All rights reserved.</span>
+    <span>Designed with ✦ in Jhelum, Pakistan</span>
+  </div>
+</footer>
+
+<script>
+/* ── CUSTOM CURSOR ── */
+const dot  = document.getElementById('cursor-dot');
+const ring = document.getElementById('cursor-ring');
+const glow = document.getElementById('mouse-glow');
+let mx=0,my=0,rx=0,ry=0;
+
+document.addEventListener('mousemove',e=>{
+  mx=e.clientX; my=e.clientY;
+  dot.style.left=mx+'px'; dot.style.top=my+'px';
+  glow.style.left=mx+'px'; glow.style.top=my+'px';
+});
+
+// Smooth ring follow
+(function animateRing(){
+  rx+=(mx-rx)*0.12; ry+=(my-ry)*0.12;
+  ring.style.left=rx+'px'; ring.style.top=ry+'px';
+  requestAnimationFrame(animateRing);
+})();
+
+// Hover glow state
+const hoverEls = document.querySelectorAll(
+  'a,button,.service-card,.process-step,.skill-card,.testi-card,.about-card,.feature-item,.stat,.tag-pill,.nav-cta'
+);
+hoverEls.forEach(el=>{
+  el.addEventListener('mouseenter',()=>{ dot.classList.add('hovered'); ring.classList.add('hovered'); });
+  el.addEventListener('mouseleave',()=>{ dot.classList.remove('hovered'); ring.classList.remove('hovered'); });
+});
+
+/* ── SCROLL FADE-IN ── */
+const observer = new IntersectionObserver(entries=>{
+  entries.forEach(el=>{
+    if(el.isIntersecting){
+      el.target.style.opacity='1';
+      el.target.style.transform='translateY(0)';
+    }
+  });
+},{threshold:0.1});
+
+document.querySelectorAll(
+  '.service-card,.process-step,.skill-card,.testi-card,.about-card,.feature-item'
+).forEach(el=>{
+  el.style.opacity='0';
+  el.style.transform='translateY(24px)';
+  el.style.transition='opacity 0.55s ease, transform 0.55s ease, border-color .25s, background .25s, box-shadow .3s';
+  observer.observe(el);
+});
+
+</script>
+</body>
+</html>
