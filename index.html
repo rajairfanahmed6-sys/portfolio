@@ -247,24 +247,29 @@ nav {
 /* ── Hero right card ── */
 .hero-photo-container {
   position: absolute;
-  right: 7%;
-  top: 50%;
+  right: 10%;
+  top: 52%;
   transform: translateY(-50%);
   z-index: 2;
-  width: 460px;
+
+  width: 620px;
+
   display: flex;
   align-items: center;
   justify-content: center;
+
   animation: floatImage 5s ease-in-out infinite;
 }
 
 .hero-photo-container img {
   width: 100%;
+  max-width: 620px;
   height: auto;
   object-fit: contain;
+
   filter:
-    drop-shadow(0 0 40px rgba(168,85,247,0.35))
-    drop-shadow(0 0 90px rgba(168,85,247,0.18));
+    drop-shadow(0 0 60px rgba(168,85,247,0.45))
+    drop-shadow(0 0 120px rgba(168,85,247,0.22));
 }
 
 /* Floating Animation */
@@ -279,15 +284,21 @@ nav {
 
 /* Mobile */
 @media(max-width:900px){
+
   .hero-photo-container{
     position: relative;
     right: auto;
     top: auto;
     transform: none;
-    width: 85%;
-    margin: 50px auto 0;
+
+    width: 95%;
+    max-width: 420px;
+
+    margin: 40px auto 0;
+
     animation: none;
   }
+
 }
 
 @keyframes fadeUp { from{opacity:0;transform:translateY(28px)} to{opacity:1;transform:translateY(0)} }
